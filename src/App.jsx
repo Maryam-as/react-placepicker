@@ -44,6 +44,16 @@ function App() {
       const place = AVAILABLE_PLACES.find((place) => place.id === id);
       return [place, ...prevPickedPlaces];
     });
+
+    // load selected place IDs from localStorage (fallback to [] if not found)
+    const storedIds = JSON.parse(localStorage.getItem("selectedPlaces")) || [];
+    // if the ID is not already in storage, add it and update localStorage
+    if (storedIds.indexOf(id) === -1) {
+      localStorage.setItem(
+        "selectedPlaces",
+        JSON.stringify([id, ...storedIds])
+      );
+    }
   }
 
   function handleRemovePlace() {
