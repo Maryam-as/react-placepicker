@@ -7,11 +7,18 @@ import DeleteConfirmation from "./components/DeleteConfirmation.jsx";
 import logoImg from "./assets/logo.png";
 import { sortPlacesByDistance } from "./loc.js";
 
+// fetch stored selected place IDs from localStorage (fallback to [] if not found)
+const storedIds = JSON.parse(localStorage.getItem("selectedPlaces")) || [];
+// map each stored ID to the corresponding place object from AVAILABLE_PLACES
+const storedPlaces = storedIds.map((id) =>
+  AVAILABLE_PLACES.find((place) => place.id === id)
+);
+
 function App() {
   const modal = useRef();
   const selectedPlace = useRef();
   const [availablePlaces, setAvailablePlaces] = useState([]);
-  const [pickedPlaces, setPickedPlaces] = useState([]);
+  const [pickedPlaces, setPickedPlaces] = useState(storedPlaces);
 
   // useEffect with empty dependency array to avoid running this logic on every render
   useEffect(() => {
